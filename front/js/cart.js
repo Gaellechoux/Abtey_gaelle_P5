@@ -86,14 +86,21 @@
                      
                       for (let q = 0; q < itemQuantity.length; q++){
                     itemQuantity[q].addEventListener('change', function(){
-                      //  const quantityM = cartItem.quantity;
-                      //  console.log(quantityM);
+
                     
                       const result = cart.find(item => item.id === fullItem._id && item.color === cartItem.color);
                       console.log(result);
+                      // result.quantity = Number(quantityM);
                       
-                      result.quantity++;
-                    //  --result.quantity;
+                       result.quantity++;
+                      // if (result.quantity > 1) {
+                       
+                      //   result.quantity--;
+                                            
+                      // }
+                      
+                      
+                  
 
                       let basket = cart.filter(item => item.id != cartItem.id || item.color != cartItem.color);
 
@@ -105,8 +112,8 @@
                                       
                                   localStorage.setItem("basket", data);
                                   
-                                 
-                                  
+                                  // document.querySelector('#cart__items').innerHTML = itemQuantity;         
+                               window.location.reload();   
                     });
                    
                   }
