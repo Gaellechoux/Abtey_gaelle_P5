@@ -2,8 +2,8 @@ const orderId = orderNumber();
 displayOrderId(orderId);
 console.log(orderId);
 function orderNumber() {
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
+  const str = window.location.search;
+  const urlParams = new URLSearchParams(str);
   return urlParams.get("orderId");
 }
 function displayOrderId(orderId) {

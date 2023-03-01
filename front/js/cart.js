@@ -7,25 +7,36 @@ function getCart() {
   return cart ? JSON.parse(cart) : false;
 }
 
-function countCart() { 
+/**
+* Calcule le prix et la quantité des produits total dans le panier 
+* 
+*/
+function countCart() {
   let cart = getCart();
   console.log(cart);
 
   let totalPrice = 0;
   let totalQuantity = 0;
 
+
   if (cart) {
     cart.forEach((cartItem) => {
+
       fetch("http://localhost:3000/api/products")
         .then((response) => response.json())
         .then((apiData) => {
           console.log(apiData);
+          
           let fullItem = apiData.find((apiItem) => cartItem.id === apiItem._id);
           console.log(fullItem);
+
 
           totalPrice += fullItem.price * cartItem.quantity;
           totalQuantity += cartItem.quantity;
 
+ /**
+ * Affiche le prix total et la quantité de produit dans le panier
+ */
           document.querySelector("#totalQuantity").textContent = totalQuantity;
           document.querySelector("#totalPrice").textContent = totalPrice;
         })
@@ -72,6 +83,11 @@ async function displayCart() {
               </div>
             </article>
             `;
+
+     /**
+     * Modification de la quantité d'un produit dans le panier, en fonction de son id et de sa couleur 
+     * 
+     */
           const itemQuantity = document.querySelectorAll(".itemQuantity");
           console.log(itemQuantity);
 
@@ -91,20 +107,16 @@ async function displayCart() {
             });
           }
 
+             /**
+             * Suppression d'un produit dans le panier en fonction de son id et de sa couleur
+             */
           const btn_delete = document.querySelectorAll(".deleteItem");
-          // btn_delete.remove();
           console.log(btn_delete);
 
           for (let d = 0; d < btn_delete.length; d++) {
-            btn_delete[d].addEventListener("click", function(e) {
-              //Selection de l'element à supprimer en fonction de son id ET sa couleur
-              // let idDelete = cart[d].id;
-              // console.log(idDelete);
-              // let colorDelete = cart[d].color;
-             let idDelete = e.target.closest(".cart__item").dataset.id;
-             let colorDelete = e.target.closest(".cart__item").dataset.color;
-            
-            
+            btn_delete[d].addEventListener("click", function (e) {
+              let idDelete = e.target.closest(".cart__item").dataset.id;
+              let colorDelete = e.target.closest(".cart__item").dataset.color;
 
               // La méthode filter
 
@@ -112,12 +124,18 @@ async function displayCart() {
                 (ellement) =>
                   ellement.id !== idDelete || ellement.color !== colorDelete
               );
+              
+              /**
+             * Vide le panier
+             */
+              e.target.closest(".cart__item").remove();
+              
+              //   if (basket == 0) {
+              //     totalQuantity.remove();
 
-           cart.splice(basket);
+              // }
 
               localStorage.setItem("basket", JSON.stringify(basket));
-
-              // window.location.href = "cart.html"
 
               countCart();
             });
@@ -132,6 +150,7 @@ async function displayCart() {
 
 displayCart();
 
+//La fonction qui véririfie et  envoi des informations client au localstorage
 function submitForm() {
   let cart = getCart();
 
@@ -143,7 +162,6 @@ function submitForm() {
     const form = document.querySelector(".cart__order__form");
     console.log(form);
 
-    // Récupération des coordonnées du formulaire client
     const inputFirstName = document.getElementById("firstName");
     const firstNameRegexp = /^[A-Za-z]{3,20}$/g;
     if (firstNameRegexp.test(firstName.value) === false) {
@@ -213,8 +231,7 @@ function submitForm() {
         const orderId = data.orderId;
         console.log(orderId);
         localStorage.clear();
-        //  localStorage.setItem("orderId", data.orderId);
-
+       
         window.location.href = "confirmation.html" + "?orderId=" + orderId;
       })
 
