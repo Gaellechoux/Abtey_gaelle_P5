@@ -19,7 +19,7 @@ fetch("http://localhost:3000/api/products/" + id)
     genererProduct(res);
   });
 
-  // Fonction qui génère toute la page produit
+// Fonction qui génère toute la page produit
 function genererProduct(product) {
   // On crée l'élément img.
   const imageElement = document.createElement("img");
@@ -29,7 +29,7 @@ function genererProduct(product) {
   // Récupération de lélément du DOM qui accueillera le titre d'un produit
   const h1 = document.querySelector("#title");
   h1.textContent = product.name;
- 
+
   const span = document.querySelector("#price");
   span.textContent = product.price;
 
@@ -40,17 +40,16 @@ function genererProduct(product) {
   item__img.appendChild(imageElement);
 
   const select = document.querySelector("#colors");
-  
-   // Insertion des options de couleurs
+
+  // Insertion des options de couleurs
   product.colors.forEach((color) => {
     const option = document.createElement("option");
     option.value = color;
     option.textContent = color;
-     console.log(option);
+    console.log(option);
     select.appendChild(option);
   });
 }
-
 
 const button = document.querySelector("#addToCart");
 console.log(button);
@@ -62,17 +61,17 @@ if (button != null) {
     console.log(color);
     const quantity = document.querySelector("#quantity").value;
     console.log(quantity);
-  
+
     if (color == null || color === "" || quantity == null || quantity == 0) {
       alert("Selectionnez une couleur et une quantité");
       return;
     }
-  if (quantity > 100) {
-      alert("Quantités maximale atteinte");
-      return;  
+    if (quantity > 100 || quantity < 0) {
+      alert("Quantités maximale atteinte ou nombre négatif utilisé.");
+      return;
     }
 
- //Récupération des options de l'article à ajouter au panier
+    //Récupération des options de l'article à ajouter au panier
     let product = {
       id: id,
       color: color,
@@ -105,10 +104,10 @@ if (button != null) {
         basket.push(product);
       }
     }
-    
-      // Stockage du panier dans le localStorage en JSON
+
+    // Stockage du panier dans le localStorage en JSON
     localStorage.setItem("basket", JSON.stringify(basket));
-    
+
     window.location.href = "cart.html";
   });
 }
