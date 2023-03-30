@@ -13,19 +13,18 @@ fetch("http://localhost:3000/api/products")
     return genererProducts(products);
   });
 
-// Fonction qui génère toute la page web
+/**
+ *  Fonction qui génère toute la page web
+ */
 function genererProducts(products) {
   // Création des items produits
   for (let i = 0; i < products.length; i++) {
     // Récupération de l'élément du DOM qui accueillera les items
     const items = document.querySelector("#items");
+
     // Récupération de l'id
     const id = products[i]._id;
     console.log(id);
-    //  const str = "http://localhost:3000/api/products/index.html?id=products[i]._id";
-    // const url = new URL(str);
-    // const id = url.searchParams.get("id");
-    // console.log(id);
 
     // Création d’un lien dédiée à un product canap
     const linkElement = document.createElement("a");

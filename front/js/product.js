@@ -1,12 +1,15 @@
 /**
- *  Récupération de l’id du produit à afficher
+ *  Récupération de l’id du produit à afficher.
  */
 const str = window.location.search;
 const urlParams = new URLSearchParams(str);
 const id = urlParams.get("id");
 console.log(id);
 
-// Récupération d'un produit et ses détails de l'API pour l'insérer dans la page produit
+/**
+ *  Récupération d'un produit et ses détails depuis l'API, pour l'insérer dans la page produit.
+ */
+
 fetch("http://localhost:3000/api/products/" + id)
   .then(function (res) {
     if (res.ok) {
@@ -19,7 +22,10 @@ fetch("http://localhost:3000/api/products/" + id)
     genererProduct(res);
   });
 
-// Fonction qui génère toute la page produit
+/**
+ *  Fonction qui génère toute la page produit
+ */
+
 function genererProduct(product) {
   // On crée l'élément img.
   const imageElement = document.createElement("img");

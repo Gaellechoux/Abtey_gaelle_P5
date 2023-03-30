@@ -31,9 +31,7 @@ function countCart() {
           totalPrice += fullItem.price * cartItem.quantity;
           totalQuantity += cartItem.quantity;
 
-          /**
-           * Affiche le prix total et la quantité de produit dans le panier
-           */
+          //  Affiche le prix total et la quantité de produit dans le panier
           document.querySelector("#totalQuantity").textContent = totalQuantity;
           document.querySelector("#totalPrice").textContent = totalPrice;
         })
@@ -44,6 +42,11 @@ function countCart() {
     document.querySelector("#totalPrice").textContent = totalPrice;
   }
 }
+
+/**
+ * Affichage d'un tableau récapitulatif des achats dans le panier.
+ *
+ */
 
 async function displayCart() {
   let cart = getCart();
@@ -81,10 +84,8 @@ async function displayCart() {
             </article>
             `;
 
-          /**
-           * Modification de la quantité d'un produit dans le panier, en fonction de son id et de sa couleur
-           *
-           */
+          //  Modification de la quantité d'un produit dans le panier, en fonction de son id et de sa couleur.
+
           const itemQuantity = document.querySelectorAll(".itemQuantity");
           console.log(itemQuantity);
 
@@ -104,9 +105,8 @@ async function displayCart() {
             });
           }
 
-          /**
-           * Suppression d'un produit dans le panier en fonction de son id et de sa couleur
-           */
+          //  Suppression d'un produit dans le panier en fonction de son id et de sa couleur.
+
           const btn_delete = document.querySelectorAll(".deleteItem");
           console.log(btn_delete);
 
@@ -115,16 +115,16 @@ async function displayCart() {
               let idDelete = e.target.closest(".cart__item").dataset.id;
               let colorDelete = e.target.closest(".cart__item").dataset.color;
 
-              // La méthode filter
+              //  La méthode filter.
 
               let basket = cart.filter(
                 (ellement) =>
                   ellement.id !== idDelete || ellement.color !== colorDelete
               );
               cart = basket;
-              /**
-               * Vidage du panier
-               */
+
+              //  Vidage du panier
+
               e.target.closest(".cart__item").remove();
               localStorage.setItem("basket", JSON.stringify(basket));
               countCart();
@@ -140,7 +140,10 @@ async function displayCart() {
 
 displayCart();
 
-//La fonction qui véririfie et  envoi des informations client au localstorage
+/**
+ * Vérification et envoi des informations client au localstorage
+ */
+
 function submitForm() {
   let cart = getCart();
 
@@ -165,7 +168,6 @@ function submitForm() {
       /^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/g;
     const addressRegexp =
       /[0-9]{1,3}(?:(?:[,. ]){1}[-a-zA-Zàâäéèêëïîôöùûüç]+)+/;
-    // /([0-9]*)?([a-zA-Z,\. ]*)??([a-zA-Z]*)$/g;
 
     const firstNameErrorMsg = document.getElementById("firstNameErrorMsg");
     const lastNameErrorMsg = document.getElementById("lastNameErrorMsg");
@@ -173,12 +175,15 @@ function submitForm() {
     const cityErrorMsg = document.getElementById("cityErrorMsg");
     const emailErrorMsg = document.getElementById("emailErrorMsg");
 
+    //  Validation du formulaire.
+
     function validForm(regexp, input, errorMsg, message) {
       if (regexp.test(input.value) === false) {
         errorMsg.innerHTML = message;
         return false;
       } else {
         errorMsg.innerHTML = "";
+
         return true;
       }
       // return regexp.test(input.value);
@@ -250,6 +255,7 @@ function submitForm() {
         .then((response) => response.json())
         .then((data) => {
           const orderId = data.orderId;
+          console.log(orderId);
           window.location.href = "confirmation.html" + "?orderId=" + orderId;
           localStorage.clear();
         })
