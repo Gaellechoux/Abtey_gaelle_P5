@@ -42,7 +42,6 @@ function countCart() {
     document.querySelector("#totalPrice").textContent = totalPrice;
   }
 }
-
 /**
  * Affichage d'un tableau récapitulatif des achats dans le panier.
  *
@@ -221,6 +220,10 @@ function submitForm() {
         "Veillez remplir un Email valide."
       )
     ) {
+      if (cart == false) {
+        alert("Veuillez ajouter un article dans le panier.");
+        return;
+      }
       //Construction d'un array depuis le local storage
 
       let idProducts = [];
