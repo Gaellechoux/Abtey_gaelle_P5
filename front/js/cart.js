@@ -187,7 +187,9 @@ function submitForm() {
       }
       // return regexp.test(input.value);
     }
-
+    
+    
+   if (cart !== false) {
     if (
       validForm(
         firstNameRegexp,
@@ -218,12 +220,10 @@ function submitForm() {
         inputMail,
         emailErrorMsg,
         "Veillez remplir un Email valide."
-      )
+      ) 
     ) {
-      if (cart == false) {
-        alert("Veuillez ajouter un article dans le panier.");
-        return;
-      }
+      
+    
       //Construction d'un array depuis le local storage
 
       let idProducts = [];
@@ -268,7 +268,10 @@ function submitForm() {
     } else {
       alert("Veillez bien remplir le formulaire.");
     }
+  }else{
+    alert("Veuillez ajouter un article dans le panier.");
+  }
   });
-}
-
+    
+} 
 submitForm();
