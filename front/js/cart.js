@@ -187,91 +187,87 @@ function submitForm() {
       }
       // return regexp.test(input.value);
     }
-    
-    
-   if (cart !== false) {
-    if (
-      validForm(
-        firstNameRegexp,
-        inputFirstName,
-        firstNameErrorMsg,
-        "Veillez remplir votre prenom."
-      ) &&
-      validForm(
-        lastNameRegexp,
-        inputLastName,
-        lastNameErrorMsg,
-        "Veillez remplir votre nom."
-      ) &&
-      validForm(
-        addressRegexp,
-        inputAdress,
-        addressErrorMsg,
-        "Veillez remplir votre adresse."
-      ) &&
-      validForm(
-        cityRegexp,
-        inputCity,
-        cityErrorMsg,
-        "Veillez remplir votre ville."
-      ) &&
-      validForm(
-        mailRegexp,
-        inputMail,
-        emailErrorMsg,
-        "Veillez remplir un Email valide."
-      ) 
-    ) {
-      
-    
-      //Construction d'un array depuis le local storage
 
-      let idProducts = [];
-      for (let i = 0; i < cart.length; i++) {
-        const ids = cart[i].id;
-        idProducts.push(ids);
-        console.log(idProducts);
+    if (cart !== false) {
+      if (
+        validForm(
+          firstNameRegexp,
+          inputFirstName,
+          firstNameErrorMsg,
+          "Veillez remplir votre prenom."
+        ) &&
+        validForm(
+          lastNameRegexp,
+          inputLastName,
+          lastNameErrorMsg,
+          "Veillez remplir votre nom."
+        ) &&
+        validForm(
+          addressRegexp,
+          inputAdress,
+          addressErrorMsg,
+          "Veillez remplir votre adresse."
+        ) &&
+        validForm(
+          cityRegexp,
+          inputCity,
+          cityErrorMsg,
+          "Veillez remplir votre ville."
+        ) &&
+        validForm(
+          mailRegexp,
+          inputMail,
+          emailErrorMsg,
+          "Veillez remplir un Email valide."
+        )
+      ) {
+        //Construction d'un array depuis le local storage
+
+        let idProducts = [];
+        for (let i = 0; i < cart.length; i++) {
+          const ids = cart[i].id;
+          idProducts.push(ids);
+          console.log(idProducts);
+        }
+
+        const body = {
+          contact: {
+            firstName: inputFirstName.value,
+            lastName: inputLastName.value,
+            address: inputAdress.value,
+            city: inputCity.value,
+            email: inputMail.value,
+          },
+          products: idProducts,
+        };
+        console.log(body);
+
+        const options = {
+          method: "POST",
+          body: JSON.stringify(body),
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        };
+
+        fetch("http://localhost:3000/api/products/order", options)
+          .then((response) => response.json())
+          .then((data) => {
+            const orderId = data.orderId;
+            console.log(orderId);
+            window.location.href = "confirmation.html" + "?orderId=" + orderId;
+            localStorage.clear();
+          })
+          .catch((err) => {
+            alert("Problème avec fetch : " + err.message);
+          });
+      } else {
+        alert("Veillez bien remplir le formulaire.");
       }
-
-      const body = {
-        contact: {
-          firstName: inputFirstName.value,
-          lastName: inputLastName.value,
-          address: inputAdress.value,
-          city: inputCity.value,
-          email: inputMail.value,
-        },
-        products: idProducts,
-      };
-      console.log(body);
-
-      const options = {
-        method: "POST",
-        body: JSON.stringify(body),
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      };
-
-      fetch("http://localhost:3000/api/products/order", options)
-        .then((response) => response.json())
-        .then((data) => {
-          const orderId = data.orderId;
-          console.log(orderId);
-          window.location.href = "confirmation.html" + "?orderId=" + orderId;
-          localStorage.clear();
-        })
-        .catch((err) => {
-          alert("Problème avec fetch : " + err.message);
-        });
     } else {
-      alert("Veillez bien remplir le formulaire.");
+      alert("Veuillez ajouter un article dans le panier.");
     }
-  }else{
-    alert("Veuillez ajouter un article dans le panier.");
-  }
   });
-    
-} 
+}
 submitForm();

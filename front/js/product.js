@@ -65,28 +65,19 @@ if (button != null) {
     console.log(id);
     const color = document.querySelector("#colors").value;
     console.log(color);
-    const quantity = document.querySelector("#quantity").value;
+    const quantitytemp = document.querySelector("#quantity").value;
+    let quantity = Math.trunc(quantitytemp);
     console.log(quantity);
 
     if (color == null || color === "" || quantity == null || quantity == 0) {
       alert("Selectionnez une couleur et une quantité");
       return;
     }
-    // if (quantity > 100 || quantity < 0) {
-    //   alert("Quantités maximale atteinte ou nombre négatif utilisé.");
-    //   return;
-    // }
 
-  //   if (Math.trunc(quantity)) {
-  //     alert("Entrez une quantité valide !");
-  //     return
-  //  }
-
-//       // Si la quantité n'est pas un nombre entier compris entre 0 et 100
-   if (Math.trunc(quantity) < 0  || Math.trunc(quantity) > 100) {
-    alert("Entrez une quantité valide !");
-    return
- }
+    if (quantity > 100 || quantity < 0) {
+      alert("Quantités maximale atteinte ou nombre négatif utilisé.");
+      return;
+    }
 
     //Récupération des options de l'article à ajouter au panier
     let product = {
