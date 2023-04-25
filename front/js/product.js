@@ -115,7 +115,14 @@ if (button != null) {
 
     // Stockage du panier dans le localStorage en JSON
     localStorage.setItem("basket", JSON.stringify(basket));
-
-    window.location.href = "cart.html";
+    if (
+      confirm(
+        "Votre produit a été ajouter au panier, voulez-vous ajouter un notre produit ?"
+      )
+    ) {
+      window.location.href = "index.html";
+    } else {
+      window.location.href = "cart.html";
+    }
   });
 }

@@ -28,8 +28,12 @@ function countCart() {
           let fullItem = apiData.find((apiItem) => cartItem.id === apiItem._id);
           console.log(fullItem);
 
-          totalPrice += fullItem.price * cartItem.quantity;
-          totalQuantity += cartItem.quantity;
+          // totalPrice += fullItem.price * cartItem.quantity;
+          // totalQuantity += cartItem.quantity;
+
+          totalPrice += fullItem.price * Math.trunc(cartItem.quantity);
+
+          totalQuantity += Math.trunc(cartItem.quantity);
 
           //  Affiche le prix total et la quantité de produit dans le panier
           document.querySelector("#totalQuantity").textContent = totalQuantity;
@@ -85,7 +89,7 @@ async function displayCart() {
 
           //  Modification de la quantité d'un produit dans le panier, en fonction de son id et de sa couleur.
 
-          const itemQuantity = document.querySelectorAll(".itemQuantity");
+          let itemQuantity = document.querySelectorAll(".itemQuantity");
           console.log(itemQuantity);
 
           for (let q = 0; q < itemQuantity.length; q++) {
@@ -93,13 +97,26 @@ async function displayCart() {
               let id = e.target.closest(".cart__item").dataset.id;
               let color = e.target.closest(".cart__item").dataset.color;
 
-              const result = cart.find(
+              let result = cart.find(
                 (item) => item.id === id && item.color === color
               );
               console.log(result);
               result.quantity = Number(e.target.value);
-              const data = JSON.stringify(cart);
-              localStorage.setItem("basket", data);
+              let resulTemp = result.quantity;
+              let currentResult = Math.trunc(resulTemp);
+              console.log(currentResult);
+
+              if (currentResult > 100 || currentResult < 0) {
+                alert("Quantités maximale atteinte ou nombre négatif utilisé.");
+                currentResult = 0;
+                return ;
+                
+              } else {
+                const data = JSON.stringify(cart);
+                localStorage.setItem("basket", data);
+                
+              }
+
               countCart();
             });
           }
